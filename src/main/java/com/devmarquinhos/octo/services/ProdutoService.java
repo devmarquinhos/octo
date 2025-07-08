@@ -5,7 +5,9 @@ import com.devmarquinhos.octo.dto.ProdutoResponse;
 import com.devmarquinhos.octo.models.Produto;
 import com.devmarquinhos.octo.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,5 +33,18 @@ public class ProdutoService {
                 .map(produto -> new ProdutoResponse(produto.getId(), produto.getTipo(), produto.getMarca(), produto.getPeso()))
                 .collect(Collectors.toList());
 
+    }
+
+    public ProdutoResponse buscarPorId(Long id) {
+        Produto produto = produtoRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado"));
+        return new ProdutoResponse(produto);
+    }
+
+    public void deletarPorId(Long id) {
+        Produto produto = produtoRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado"));
+
+        produtoRepository.delete(produto);
     }
 }

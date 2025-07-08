@@ -25,4 +25,16 @@ public class ProdutoController {
     public ResponseEntity<List<ProdutoResponse>> listarProdutos(){
         return ResponseEntity.ok(produtoService.listarProdutos());
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ProdutoResponse> buscarProdutoPorId(@PathVariable Long id) {
+        ProdutoResponse produto = produtoService.buscarPorId(id);
+        return ResponseEntity.ok(produto);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarProduto(@PathVariable Long id) {
+        produtoService.deletarPorId(id);
+        return ResponseEntity.noContent().build();
+    }
 }
