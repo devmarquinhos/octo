@@ -11,9 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-// TODO -> Fazer a rota de atualizacao parcial (patch)
-
-
 @RestController
 @RequestMapping("/produtos")
 public class ProdutoController {

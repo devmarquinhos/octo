@@ -13,8 +13,6 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-// TODO -> Fazer a rota de atualizacao parcial (patch)
-
 @Service
 public class ProdutoService {
     @Autowired
