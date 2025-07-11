@@ -1,5 +1,6 @@
 package com.devmarquinhos.octo.services;
 
+import com.devmarquinhos.octo.dto.ProdutoPatchRequest;
 import com.devmarquinhos.octo.dto.ProdutoRequest;
 import com.devmarquinhos.octo.dto.ProdutoResponse;
 import com.devmarquinhos.octo.models.Produto;
@@ -11,6 +12,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+// TODO -> Fazer a rota de atualizacao parcial (patch)
 
 @Service
 public class ProdutoService {
@@ -39,6 +42,26 @@ public class ProdutoService {
         Produto produto = produtoRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado"));
         return new ProdutoResponse(produto);
+    }
+
+    public ProdutoResponse atualizarProduto(Long id, ProdutoPatchRequest request) {
+        Produto produto = produtoRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado"));
+
+        if (request.getTipo() != null) {
+            produto.setTipo(request.getTipo());
+        }
+
+        if (request.getMarca() != null) {
+            produto.setMarca(request.getMarca());
+        }
+
+        if (request.getPeso() != null) {
+            produto.setPeso(request.getPeso());
+        }
+
+        Produto produtoAtualizado = produtoRepository.save(produto);
+        return new ProdutoResponse(produtoAtualizado);
     }
 
     public void deletarPorId(Long id) {
