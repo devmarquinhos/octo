@@ -17,7 +17,7 @@ public class BeneficiadoService {
     @Autowired
     private BeneficiadoRepository beneficiadoRepository;
 
-    private BeneficiadoResponse criarBeneficiado(BeneficiadoRequest request){
+    public BeneficiadoResponse criarBeneficiado(BeneficiadoRequest request){
         Beneficiado beneficiado = new Beneficiado();
         beneficiado.setResponsavel(request.getResponsavel());
         beneficiado.setTelefone(request.getTelefone());
